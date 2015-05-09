@@ -1,0 +1,26 @@
+<ul class="nav nav-pills pull-right">
+  <li ng-show="loggedIn()" class="active"><a class="btn btn-primary" href ng-click="logout()">Logout</a></li>
+</ul>
+<div>
+  <input type='search' class="form-control" placeholder='Search' ng-model="filterWord.description">
+  <table class="table">
+    <tr>
+      <th ng-click="sort('description')">Description</th>
+      <th ng-click="sort('created_at')">Date</th>
+      <th>State</th>
+      <th ng-click="sort('performer')">Performer</th>
+      <th></th>
+    </tr>
+    <tr ng-repeat="task in tasks | filter: filterWord | orderBy: wordOrder : reverse">
+      <td>{{task.description}}</td>
+      <td>{{task.created_at | date }}</td>      
+      <td><input type="checkbox"></td>
+      <td>{{task.performer}}</td>
+      <td>
+        <button class="btn btn-default" ng-click="edit(task)">Edit</button>
+        <button class="btn btn-danger" ng-click="delete(task)">Delete</button>
+      </td>
+    </tr>
+  </table>
+  <button ng-click="add()" class="btn btn-primary">Add Task +</button>
+</div>

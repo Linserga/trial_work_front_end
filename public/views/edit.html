@@ -1,0 +1,23 @@
+<h3>Edit Task</h3>
+<table class="table">
+	<tr>
+		<th>Description</th>
+		<th>Date</th>
+		<th>State</th>
+	</tr>
+	<tr>
+		<td>
+			<form name="editForm" ng-submit="editForm.$valid && updateTask()" novalidate>
+				<div class="form-group">
+					<input type="text" name="description" id="description" class="form-control" ng-model="task.description" value="{{task.description}}" required>
+					<div ng-messages="editForm.description.$error" ng-show="editForm.description.$dirty">
+						<div ng-message="required">Description is required</div>
+					</div>
+				</div>
+				<button class="btn btn-primary">Update Task</button>	
+			</form>
+		</td>
+		<td>{{task.created_at | date }}</td>
+		<td>{{task.state}}</td>
+	</tr>
+</table>

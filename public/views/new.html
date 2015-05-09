@@ -1,0 +1,18 @@
+<h3>Add Task</h3>
+<form name='taskForm' ng-submit="taskForm.$valid && addTask()" novalidate>
+	<div class="form-group">
+		<label for="description">Description</label>
+		<input type="text" name="description" id="description" ng-model="task.description" required class='form-control'>
+		<div ng-messages="taskForm.description.$error" style="color:maroon" role="alert" ng-show="taskForm.description.$dirty">
+			<div ng-message="required">Task is required</div>
+		</div>
+	</div>
+	<div class="from-group">
+		<label>Performer
+			<select ng-model="task.performer">
+				<option ng-repeat="user in users" value="{{user.email}}">{{user.email}}</option>
+			</select>
+		</label>
+	</div>
+	<button class="btn btn-primary">Add Task</button>
+</form>
