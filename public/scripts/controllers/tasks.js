@@ -5,7 +5,7 @@ angular.module('frontEndApp')
     
     var userId = $routeParams.id;		
 
-    var dispatcher = new WebSocketRails('wss://mysterious-fjord-9872.herokuapp.com/websocket');
+    var dispatcher = new WebSocketRails('mysterious-fjord-9872.herokuapp.com/websocket');
 
     dispatcher.trigger('get_tasks', userId);
     dispatcher.bind('tasks', function (data){
