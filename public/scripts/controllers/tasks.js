@@ -5,14 +5,14 @@ angular.module('frontEndApp')
     
     var userId = $routeParams.id;		
 
+    $scope.tasks = Task.query({id: userId});
+
     var dispatcher = new WebSocketRails('mysterious-fjord-9872.herokuapp.com/websocket');
 
-    dispatcher.trigger('get_tasks', userId);
-    dispatcher.bind('tasks', function (data){
-        $scope.tasks = JSON.parse(data);
-    });
-
-    // $scope.tasks = Task.query({id: userId});
+    // dispatcher.trigger('get_tasks', userId);
+    // dispatcher.bind('tasks', function (data){
+    //     $scope.tasks = angualar.fromJson(data);
+    // });    
 
     $scope.wordOrder = 'description';
 
@@ -42,6 +42,12 @@ angular.module('frontEndApp')
     
 
     $scope.delete = function (task){
+        for(var i = 0; i < $scope.tasks.length; i++){
+            if($scope.tasks[i].id == task.id){
+                $scope.tasks.splice(i, 1);
+                break;
+            }
+        }
         dispatcher.trigger('delete', task);
     };
   }]);
