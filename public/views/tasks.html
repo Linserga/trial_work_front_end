@@ -11,7 +11,7 @@
       <th ng-click="sort('performer')">Performer</th>
       <th></th>
     </tr>
-    <tr ng-repeat="task in tasks | filter: filterWord | orderBy: wordOrder : reverse">
+    <tr ng-repeat="task in tasks[0] | filter: filterWord | orderBy: wordOrder : reverse">
       <td>{{task.description}}</td>
       <td>{{task.created_at | date }}</td>      
       <td><input type="checkbox"></td>

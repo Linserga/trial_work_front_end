@@ -1,53 +1,41 @@
 'use strict';
 
 angular.module('frontEndApp')
-  .controller('TasksCtrl', ['$scope', 'Task', '$routeParams', '$location', function ($scope, Task, $routeParams, $location) {
+  .controller('TasksCtrl', ['$scope', 'Task', '$routeParams', '$location', 'Sockets', function ($scope, Task, $routeParams, $location, Sockets) {
     
-    var userId = $routeParams.id;		
+  var userId = $routeParams.id;
+  $scope.tasks = [];
 
-    $scope.tasks = Task.query({id: userId});
+  $scope.tasks.push(Task.query({id: userId}));  
 
-    var dispatcher = new WebSocketRails('mysterious-fjord-9872.herokuapp.com/websocket');
+  var dispatcher = new WebSocketRails('mysterious-fjord-9872.herokuapp.com/websocket');
+  var channel = dispatcher.subscribe('tasks');    
 
-    // dispatcher.trigger('get_tasks', userId);
-    // dispatcher.bind('tasks', function (data){
-    //     $scope.tasks = angualar.fromJson(data);
-    // });    
 
-    $scope.wordOrder = 'description';
+  channel.bind('change', function(data){
+    $scope.$apply(function(){    
+      $scope.tasks = [];
+      $scope.tasks.push(angular.fromJson(data));
+    });
+  });  
 
-    $scope.sort = function(item){
-    	$scope.wordOrder = item;
-    	$scope.reverse = !$scope.reverse;
-    };
 
-    $scope.add = function (){
-    	$location.path('users/' + userId + '/tasks/new');
-    };
+  $scope.wordOrder = 'description';
 
-    $scope.edit = function(task){
-        $location.path('users/' + userId + '/tasks/' + task.id + '/edit');
-    };
+  $scope.sort = function(item){
+    $scope.wordOrder = item;
+    $scope.reverse = !$scope.reverse;
+  };
 
-    // $scope.delete = function(task){
-    //     for(var i = 0; i < $scope.tasks.length; i++){
-    //         if($scope.tasks[i].id == task.id){
-    //             $scope.tasks.splice(i, 1);
-    //             break;
-    //         }
-    //     }
-    //     Task.delete({id: userId, taskId: task.id});        
-    // };
+  $scope.add = function (){
+    $location.path('users/' + userId + '/tasks/new');
+  };
 
-    
+  $scope.edit = function(task){
+    $location.path('users/' + userId + '/tasks/' + task.id + '/edit');
+  };
 
-    $scope.delete = function (task){
-        for(var i = 0; i < $scope.tasks.length; i++){
-            if($scope.tasks[i].id == task.id){
-                $scope.tasks.splice(i, 1);
-                break;
-            }
-        }
-        dispatcher.trigger('delete', task);
-    };
-  }]);
+  $scope.delete = function(task){            
+    Task.delete({id: userId, taskId: task.id});   
+  };    
+}]);
