@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('frontEndApp')
-  .controller('TasksCtrl', ['$scope', 'Task', '$routeParams', '$location', 'Sockets', function ($scope, Task, $routeParams, $location, Sockets) {
+  .controller('TasksCtrl', ['$scope', 'Task', '$routeParams', '$location', function ($scope, Task, $routeParams, $location) {
     
   var userId = $routeParams.id;
   $scope.tasks = [];
