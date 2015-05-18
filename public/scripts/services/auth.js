@@ -3,7 +3,7 @@
 angular.module('frontEndApp')
 	.service('auth', ['$http', function ($http){
 		this.login = function (user){
-			return $http.post('/api/login', { email: user.email, password: user.password});
+			return $http.post('https://mysterious-fjord-9872.herokuapp.com/api/login', { email: user.email, password: user.password});
 		};
 
 		this.isLoggedIn = function(){
@@ -11,6 +11,6 @@ angular.module('frontEndApp')
 		};
 
 		this.logout = function(){
-			return $http.delete('/api/logout');
+			return $http.delete('https://mysterious-fjord-9872.herokuapp.com/api/logout');
 		};
 	}]);
