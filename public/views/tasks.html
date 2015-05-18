@@ -14,7 +14,7 @@
     <tr ng-repeat="task in tasks[0] | filter: filterWord | orderBy: wordOrder : reverse">
       <td>{{task.description}}</td>
       <td>{{task.created_at | date }}</td>      
-      <td><input type="checkbox"></td>
+      <td ng-click="update(task)">< ng-model="task.state" input type="checkbox"></td>
       <td>{{task.performer}}</td>
       <td>
         <button class="btn btn-default" ng-click="edit(task)">Edit</button>

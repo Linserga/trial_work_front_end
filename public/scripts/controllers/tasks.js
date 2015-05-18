@@ -34,6 +34,10 @@ angular.module('frontEndApp')
   $scope.edit = function(task){
     $location.path('users/' + userId + '/tasks/' + task.id + '/edit');
   };
+    
+  $scope.update = function(task){
+    Task.update({id: userId, taskId: task.id}, task);
+  };
 
   $scope.delete = function(task){            
     Task.delete({id: userId, taskId: task.id});   
